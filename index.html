@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#1a56db">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="data:,">
+<title>PPV机型-BOM汇总</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- 首页 -->
+  <section id="view-home" class="view active">
+    <header class="hero">
+      <div class="hero-badge">PPV</div>
+      <h1>PPV机型-BOM汇总</h1>
+      <p class="hero-sub">零件号查询 · AI问答 · BOM管理</p>
+    </header>
+
+    <div class="card">
+      <div class="card-title">请选择要查询的BOM表</div>
+      <select id="sheet-select" aria-label="选择BOM表"></select>
+      <button id="btn-enter" class="btn btn-primary btn-block">进入查询</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">PPV机型-BOM汇总表格导入</div>
+      <p class="tip">用于后续新增BOM：选择 .xlsx 文件后自动加入上方下拉框，数据保存在本机浏览器中。</p>
+      <label class="btn btn-ghost btn-block" for="file-input">选择Excel文件导入</label>
+      <input type="file" id="file-input" accept=".xlsx,.xls" hidden>
+      <div class="import-status" id="import-status"></div>
+      <div class="import-actions">
+        <button id="btn-reset" class="link-btn" type="button">恢复初始数据</button>
+      </div>
+    </div>
+
+    <footer class="foot" id="total-info"></footer>
+  </section>
+
+  <!-- 查询页 -->
+  <section id="view-query" class="view">
+    <div class="topbar">
+      <button class="back" data-goto="home" aria-label="返回首页">‹</button>
+      <div class="topbar-title" id="query-sheet-name"></div>
+      <div class="topbar-spacer"></div>
+    </div>
+
+    <div class="search-card card">
+      <div class="field-label">请输入零件号</div>
+      <div class="search-row">
+        <input id="part-input" type="search" placeholder="例如：68381+02" autocomplete="off" enterkeyhint="search">
+        <button id="btn-mic-search" class="mic-btn" type="button" title="语音输入零件号">🎤</button>
+        <button id="btn-search" class="btn btn-primary" type="button">查询</button>
+      </div>
+      <div class="tip">支持模糊查询：输入 68381+02 或 68381 即可查到 S00068381+02；点击麦克风可语音输入。</div>
+    </div>
+
+    <div id="search-result" class="result-area"></div>
+
+    <div class="ai-entry">
+      <div class="ai-entry-icon">AI</div>
+      <div class="ai-entry-text">
+        <div class="ai-entry-title">AI问答</div>
+        <div class="ai-entry-desc">BOM统计 · 单件信息 · 工位明细 · 分类汇总</div>
+      </div>
+      <button id="btn-goto-ai" class="btn btn-primary btn-sm" type="button">进入AI问答</button>
+    </div>
+
+    <button id="btn-export" class="fab" type="button" title="导出当前BOM为Excel">导出Excel</button>
+  </section>
+
+  <!-- AI问答页 -->
+  <section id="view-ai" class="view">
+    <div class="topbar">
+      <button class="back" data-goto="query" aria-label="返回查询页">‹</button>
+      <div class="topbar-title">AI问答 · <span id="ai-sheet-name"></span></div>
+      <div class="topbar-spacer"></div>
+    </div>
+
+    <div class="examples card">
+      <div class="card-title">参考提问（点击可直接提问）</div>
+      <div id="example-list" class="example-list"></div>
+    </div>
+
+    <div class="ai-input-wrap">
+      <input id="ai-input" type="text" placeholder="输入问题，例如：该BOM一共有多少零件号条目数" autocomplete="off">
+      <button id="btn-mic-ai" class="mic-btn" type="button" title="语音输入问题">🎤</button>
+      <button id="btn-ask" class="btn btn-primary" type="button">发送</button>
+    </div>
+    <div id="ai-answer"></div>
+    <div class="ai-hint">答案由本地数据引擎即时计算，通常 1 毫秒内返回。</div>
+  </section>
+
+</div>
+<div id="toast"></div>
+
+<script src="lib/jszip.min.js"></script>
+<script src="data.js"></script>
+<script src="js/xlsx-io.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
